@@ -56,11 +56,9 @@ export default {
         })
         .then((cikkek) => {
           this.cikkek = cikkek["cikkek"];
-          // this.$emit("add-bolt", this.bolt.nev);
           console.log(this.cikkek);
         })
         .catch((err) => {
-          // this.isLoading = false;
           console.log(err);
           this.error = `Failed to fetch cikkek data - try again later! (${err})`;
         });
@@ -106,8 +104,4 @@ export default {
 label {
   display: block;
 }
-
-/* label{
-  display: block;
-} */
 </style>

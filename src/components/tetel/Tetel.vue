@@ -1,42 +1,44 @@
 <template>
   <div>
-    <router-link to="/">Vissza a vasarlasokhoz</router-link>
-    <h2>Tételek</h2>
+    <base-card>
+      <router-link to="/">Vissza a vasarlasokhoz</router-link>
+      <h2>Tételek</h2>
 
-    <base-button @click="addFormToggled = !addFormToggled">{{
-      addFormToggled ? "Mégse" : "Új tétel hozzáadása"
-    }}</base-button>
-    <div v-if="addFormToggled">
-      <base-card style="width: 35%">
-        <add-new-tetel :vasarlasid="tetel[0].vasarlasid"></add-new-tetel>
-      </base-card>
-    </div>
+      <base-button @click="addFormToggled = !addFormToggled">{{
+        addFormToggled ? "Mégse" : "Új tétel hozzáadása"
+      }}</base-button>
+      <div v-if="addFormToggled">
+        <base-card style="width: 35%">
+          <add-new-tetel :vasarlasid="tetel[0].vasarlasid"></add-new-tetel>
+        </base-card>
+      </div>
 
-    <base-button type="button" @click="exportToExcel"
-      >Excel download</base-button
-    >
+      <base-button type="button" @click="exportToExcel"
+        >Excel download</base-button
+      >
 
-    <div v-if="tetel">
-      <ul>
-        <li style="display:flex; justify-content: space-between;">
-          <div
-            style="width: 13%"
-            v-for="key of Object.keys(tetel[0])"
-            :key="key"
-          >
-            <p>
-              {{ key }}
-            </p>
-          </div>
-        </li>
-        <tetel-item
-          v-for="item of tetel"
-          :key="item.id"
-          :item="item"
-          @add-cikk="item.cikknev = addCikk"
-        ></tetel-item>
-      </ul>
-    </div>
+      <div v-if="tetel">
+        <ul>
+          <li style="display:flex; justify-content: space-between;">
+            <div
+              style="width: 13%"
+              v-for="key of Object.keys(tetel[0])"
+              :key="key"
+            >
+              <p>
+                {{ key }}
+              </p>
+            </div>
+          </li>
+          <tetel-item
+            v-for="item of tetel"
+            :key="item.id"
+            :item="item"
+            @add-cikk="item.cikknev = addCikk"
+          ></tetel-item>
+        </ul>
+      </div>
+    </base-card>
   </div>
 </template>
 
@@ -68,10 +70,8 @@ export default {
         })
         .then((tetel) => {
           this.tetel = tetel["vasarlas_tetelek"];
-          // this.$emit("add-bolt", this.bolt.nev);
         })
         .catch((err) => {
-          // this.isLoading = false;
           this.error = `Failed to fetch vasarlas data - try again later! (${err})`;
         });
     },

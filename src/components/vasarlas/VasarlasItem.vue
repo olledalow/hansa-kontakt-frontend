@@ -65,7 +65,6 @@ export default {
           this.$emit("add-bolt", this.bolt.nev);
         })
         .catch((err) => {
-          // this.isLoading = false;
           this.error = `Failed to fetch bolt data - try again later! (${err})`;
         });
     },

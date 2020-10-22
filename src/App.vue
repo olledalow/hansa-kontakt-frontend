@@ -1,28 +1,10 @@
 <template>
-  <base-card>
-    <router-view></router-view>
-  </base-card>
+  <router-view></router-view>
 </template>
 
 <script>
-// import VasarlasBase from "./components/vasarlas/VasarlasBase.vue";
-
 export default {
   name: "App",
-  components: {
-    // VasarlasBase,
-  },
-  provide() {
-    return {
-      isLoading: this.isLoading,
-      exportToExcel: this.exportToExcel,
-    };
-  },
-  data() {
-    return {
-      isLoading: true,
-    };
-  },
 };
 </script>
 

@@ -1,56 +1,59 @@
 <template>
   <div>
-    <h2>vasarlasok</h2>
-    <loading-spinner v-if="isLoading"></loading-spinner>
+    <base-card>
+      <h2>vasarlasok</h2>
+      <loading-spinner v-if="isLoading"></loading-spinner>
 
-    <div v-else>
-      <base-button type="button" @click="exportToExcel"
-        >Excel download</base-button
-      >
+      <div v-else>
+        <base-button type="button" @click="exportToExcel"
+          >Excel download</base-button
+        >
 
-      <ul>
-        <li style="display:flex; justify-content: left;">
-          <div style="width: 15%">
-            <input
-              type="text"
-              placeholder="search ID"
-              v-model="valId"
-              @keyup="Search"
-            />
+        <ul>
+          <li style="display:flex; justify-content: left;">
+            <div style="width: 15%">
+              <input
+                type="text"
+                placeholder="search ID"
+                v-model="valId"
+                @keyup="Search"
+              />
+            </div>
+          </li>
+
+          <li style="display:flex; justify-content: space-between;">
+            <div
+              class="column-name"
+              style="width: 13%"
+              v-for="key of Object.keys(sortedArray[0])"
+              :key="key"
+              @click="sort(key)"
+            >
+              <p>
+                {{ key }}
+              </p>
+            </div>
+          </li>
+          <div v-if="!filteredVasarlasok">
+            <vasarlas-item
+              v-for="item of sortedArray.slice(0, rowLimit)"
+              :key="item.id"
+              :item="item"
+              @add-bolt="item.boltnev = addBolt"
+            ></vasarlas-item>
           </div>
-        </li>
-
-        <li style="display:flex; justify-content: space-between;">
-          <div
-            style="width: 13%"
-            v-for="key of Object.keys(sortedArray[0])"
-            :key="key"
-            @click="sort(key)"
-          >
-            <p>
-              {{ key }}
-            </p>
+          <div v-else>
+            <vasarlas-item
+              v-for="item of sortedArray.slice(0, rowLimit)"
+              :key="item.id"
+              :item="item"
+              @add-bolt="item.boltnev = addBolt"
+            ></vasarlas-item>
           </div>
-        </li>
-        <div v-if="!filteredVasarlasok">
-          <vasarlas-item
-            v-for="item of sortedArray.slice(0, rowLimit)"
-            :key="item.id"
-            :item="item"
-            @add-bolt="item.boltnev = addBolt"
-          ></vasarlas-item>
-        </div>
-        <div v-else>
-          <vasarlas-item
-            v-for="item of sortedArray.slice(0, rowLimit)"
-            :key="item.id"
-            :item="item"
-            @add-bolt="item.boltnev = addBolt"
-          ></vasarlas-item>
-        </div>
-      </ul>
-    </div>
-    <base-button @click="increaseRowLimit">Load more</base-button>
+        </ul>
+      </div>
+      <base-button @click="increaseRowLimit">Load more</base-button>
+    </base-card>
   </div>
 </template>
 
@@ -59,7 +62,6 @@ import XLSX from "xlsx";
 import VasarlasItem from "./VasarlasItem";
 
 export default {
-  // props: ["row-limit"],
   components: {
     VasarlasItem,
   },
@@ -182,5 +184,11 @@ ul {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.column-name:hover {
+  background: #360032ba;
+  cursor: pointer;
+  color: white;
 }
 </style>

@@ -32,7 +32,6 @@ export default {
   data() {
     return {
       copiedItem: null,
-      // cikk: null,
     };
   },
   methods: {
@@ -49,7 +48,6 @@ export default {
           this.$emit("add-cikk", this.cikk.nev);
         })
         .catch((err) => {
-          // this.isLoading = false;
           this.error = `Failed to fetch cikk data - try again later! (${err})`;
         });
     },
